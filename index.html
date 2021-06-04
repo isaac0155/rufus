@@ -1,0 +1,458 @@
+
+<!DOCTYPE html>
+
+<html lang="es-ES" dir="ltr">
+<head profile="http://www.w3.org/2005/10/profile">
+<meta charset='utf-8'>
+<meta name="description" content="Rufus: Create bootable USB drives the easy way">
+<meta name="keywords" content="Application,BIOS,Boot,Bootable,DOS,Download,Drive,Fast,Flash,Formatting,FreeDOS,Linux,Portable,Rufus,Small,Standlone,UEFI,USB,Utility,Windows">
+<meta name="author" content="Pete Batard">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="application-name" content="Rufus"/>
+<meta name="msapplication-square70x70logo" content="/pics/rufus-72.png"/>
+<meta name="msapplication-square150x150logo" content="/pics/rufus-150.png"/>
+<meta name="msapplication-wide310x150logo" content="/pics/rufus-150.png"/>
+<meta name="msapplication-square310x310logo" content="/pics/rufus-256.png"/>
+<meta name="msapplication-TileColor" content="#3f4555"/>
+<title>Rufus - Cree unidades USB arrancables fácilmente</title>
+<script type="text/javascript">
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37022602-1', 'auto');
+	ga('send', 'pageview');
+</script>
+<style type="text/css">
+	body {
+		background-color: #3f4555;
+		font-family: Helvetica, Arial, FreeSans, san-serif;
+		color: #ffffff;
+	}
+	#right_column {
+		float: right;
+		margin: 0 auto;
+		margin-top: 10px;
+		margin-right: 10px;
+		width: 250px;
+		font-size: 0.8em;
+	}
+	#container {
+		margin: 0 auto;
+		width: 730px;
+		overflow: auto;
+	}
+	#notice {
+		border:4px solid #ffa520;
+		color:#ffffff;
+		padding:1em;
+		width:94%;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	table.reference
+	{
+	color: #000030;
+	background-color:#ffffff;
+	border:1px solid #c3c3c3;
+	border-collapse:collapse;
+	width:100%;
+	}
+	table.reference th
+	{
+	background-color:#e5eecc;
+	border:1px solid #c3c3c3;
+	padding:3px;
+	vertical-align:top;
+	}
+	table.reference td
+	{
+	border:1px solid #c3c3c3;
+	padding:3px;
+	vertical-align:top;
+	}
+	h1 { font-size: 3.8em; color: #c0baaa; margin-bottom: 3px; margin-top: 10px;}
+	h1 .small { font-size: 0.4em; }
+	h1 a { text-decoration: none }
+	h2 { padding: 12px; font-size: 1.5em; color: #c0baaa; line-height: 1.3em; border: 2px solid #706a6a;}
+	h3 { text-align: center; color: #c0baaa; }
+	a { color: #c0baaa; }
+	.tagline { font-size: 1.6em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+	.download { float: right; }
+	pre { background: #000; color: #fff; padding: 15px;}
+	code { display:inline-block; padding:3px 3px 4px 1px; color:#ececec; font-family:monospace, monospace; line-height:10px; font-size:16px; vertical-align:middle; }
+	hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+	.kbd{
+		display:inline-block;
+		padding:3px 5px;
+		font-family:monospace, monospace;
+		font-size:11px;
+		line-height:10px;
+		color:#555;
+		vertical-align:middle;
+		background-color:#fcfcfc;
+		border:solid 1px #ccc;
+		border-bottom-color:#bbb;
+		border-radius:3px;
+		box-shadow:inset 0 -1px 0 #bbb
+	}
+	.footer { font-size: 0.9em; text-align:center; padding-top:30px; font-style: italic; }
+	.treeView{ -moz-user-select:none; position:relative; }
+	.treeView ul{ margin:0 0 0 -1.5em; padding:0 0 0 1.5em; }
+	.treeView li{ margin:0; padding:0; list-style-position:inside; list-style-image:none; cursor:auto; }
+	.treeView li li{ padding-left:1.5em; }
+	@media screen and (max-width: 1002px) {
+	  .hide_on_small_screens {
+	    display:none;
+	  }
+	}
+</style>
+</head>
+
+<body>
+<div id="right_column">
+<label for="lang_select">Cambiar idioma:</label><select name="lang_select" id="lang_select" onchange="self.location='/'+this.options[this.selectedIndex].value">
+  <option dir="ltr"  value="en">
+  🇮🇪/🇬🇧/🇺🇸 English (International)</option>
+  <option dir="ltr"  value="sq">
+  🇦🇱 Albanian (Shqip)</option>
+  <option dir="ltr"  value="ar">
+  🇸🇦 Arabic (العربية)</option>
+  <option dir="ltr"  value="hy">
+  🇦🇲 Armenian (Հայերեն)</option>
+  <option dir="ltr"  value="az">
+  🇦🇿 Azerbaijani (Azərbaycan)</option>
+  <option dir="ltr"  value="bn">
+  🇧🇩 Bangla (বাংলা)</option>
+  <option dir="ltr"  value="bs">
+  🇧🇦 Bosnian (Bosánski)</option>
+  <option dir="ltr"  value="bg">
+  🇧🇬 Bulgarian (Български)</option>
+  <option dir="ltr"  value="yue">
+  🇭🇰 Cantonese [Hong Kong] (香港粵文)</option>
+  <option dir="ltr"  value="ca">
+  🏴󠁥󠁳󠁣󠁴󠁿 Catalan (Català)</option>
+  <option dir="ltr"  value="zh">
+  🇨🇳 Chinese Simplified (简体中文)</option>
+  <option dir="ltr"  value="zh_TW">
+  🇹🇼 Chinese Traditional (正體中文)</option>
+  <option dir="ltr"  value="hr">
+  🇭🇷 Croatian (Hrvatski)</option>
+  <option dir="ltr"  value="cs">
+  🇨🇿 Czech (Čeština)</option>
+  <option dir="ltr"  value="da">
+  🇩🇰 Danish (Dansk)</option>
+  <option dir="ltr"  value="nl">
+  🇳🇱 Dutch (Nederlands)</option>
+  <option dir="ltr"  value="et">
+  🇪🇪 Estonian (eesti keel)</option>
+  <option dir="ltr"  value="fi">
+  🇫🇮 Finnish (Suomi)</option>
+  <option dir="ltr"  value="fr">
+  🇫🇷 French (Français)</option>
+  <option dir="ltr"  value="gl">
+  🏴󠁥󠁳󠁧󠁡󠁿 Galician (Galego)</option>
+  <option dir="ltr"  value="de">
+  🇩🇪 German (Deutsch)</option>
+  <option dir="ltr"  value="el">
+  🇬🇷 Greek (Ελληνικά)</option>
+  <option dir="ltr"  value="he">
+  🇮🇱 Hebrew (עברית)</option>
+  <option dir="ltr"  value="hi">
+  🇮🇳 Hindi (हिंदी)</option>
+  <option dir="ltr"  value="hu">
+  🇭🇺 Hungarian (Magyar)</option>
+  <option dir="ltr"  value="id">
+  🇮🇩 Indonesian (Bahasa Indonesia)</option>
+  <option dir="ltr"  value="ga">
+  🇮🇪 Irish (Gaeilge)</option>
+  <option dir="ltr"  value="it">
+  🇮🇹 Italian (Italiano)</option>
+  <option dir="ltr"  value="ja">
+  🇯🇵 Japanese (日本語)</option>
+  <option dir="ltr"  value="ko">
+  🇰🇷 Korean (한국어)</option>
+  <option dir="ltr"  value="ar_IQ">
+  🏴󠁩󠁲󠀱󠀶󠁿 Kurdish (کوردی)</option>
+  <option dir="ltr"  value="lv">
+  🇱🇻 Latvian (Latviešu)</option>
+  <option dir="ltr"  value="lt">
+  🇱🇹 Lithuanian (Lietuvių)</option>
+  <option dir="ltr"  value="mk">
+  🇲🇰 Macedonian (Македонски)</option>
+  <option dir="ltr"  value="ms">
+  🇲🇾 Malay (Bahasa Malaysia)</option>
+  <option dir="ltr"  value="nb">
+  🇳🇴 Norwegian (Norsk)</option>
+  <option dir="ltr"  value="or">
+  🇮🇳 Odia (ଓଡ଼ିଆ)</option>
+  <option dir="ltr"  value="fa">
+  🇮🇷 Persian (پارسی)</option>
+  <option dir="ltr"  value="pl">
+  🇵🇱 Polish (Polski)</option>
+  <option dir="ltr"  value="pt_BR">
+  🇧🇷 Portuguese [BR] (Português [BR])</option>
+  <option dir="ltr"  value="pt">
+  🇵🇹 Portuguese [PT] (Português [PT])</option>
+  <option dir="ltr"  value="ro">
+  🇷🇴 Romanian (Română)</option>
+  <option dir="ltr"  value="ru">
+  🇷🇺 Russian (Русский)</option>
+  <option dir="ltr"  value="sr">
+  🇷🇸 Serbian [Latin] (Srpski [Latinica])</option>
+  <option dir="ltr"  value="si">
+  🇱🇰 Sinhala (සිංහල)</option>
+  <option dir="ltr"  value="sk">
+  🇸🇰 Slovak (Slovensky)</option>
+  <option dir="ltr"  value="sl">
+  🇸🇮 Slovenian (Slovenščina)</option>
+  <option dir="ltr" selected="selected" value="es">
+  🇪🇸 Spanish (Español)</option>
+  <option dir="ltr"  value="sv">
+  🇸🇪 Swedish (Svenska)</option>
+  <option dir="ltr"  value="th">
+  🇹🇭 Thai (ไทย)</option>
+  <option dir="ltr"  value="tr">
+  🇹🇷 Turkish (Türkçe)</option>
+  <option dir="ltr"  value="uk">
+  🇺🇦 Ukrainian (Українська)</option>
+  <option dir="ltr"  value="ur">
+  🇵🇰 Urdu (اُردُو)</option>
+  <option dir="ltr"  value="vi">
+  🇻🇳 Vietnamese (Tiếng Việt)</option>
+  <option dir="ltr"  value="cy">
+  🏴󠁧󠁢󠁷󠁬󠁳󠁿 Welsh (Cymraeg)</option>
+</select>
+<div class="hide_on_small_screens">
+<a target="_blank" href="https://github.com/pbatard/rufus/wiki/Localization#wiki-Editing_an_existing_homepage_translation">¿Quiere mejorar esta traducción?</a>&nbsp;<br />
+&nbsp;<br />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Rufus - Sidebar -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:160px;height:600px"
+     data-ad-client="ca-pub-8924382055379825"
+     data-ad-slot="8722233764"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).requestNonPersonalizedAds = 1;
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+</div>
+<div id="container">
+	<hr style="width:728px;">
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- Rufus - Banner -->
+	<ins class="adsbygoogle"
+	     style="display:inline-block;width:728px;height:90px"
+	     data-ad-client="ca-pub-8924382055379825"
+	     data-ad-slot="7142613500"></ins>
+	<script>
+	     (adsbygoogle = window.adsbygoogle || []).requestNonPersonalizedAds = 1;
+	     (adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+	<hr style="width:728px;">
+	<h1><img border="0" src="https://rufus.ie/pics/rufus-128.png" alt="[rufus icon]"/>
+	<a target="_blank" href="https://github.com/pbatard/rufus">Rufus</a></h1>
+	<div class="tagline">
+		Cree unidades USB arrancables fácilmente	</div>
+		<img border="0" src="https://rufus.ie/pics/rufus_es.png"  alt="[rufus screenshot]"/>		<p>Rufus es una utilidad que le ayuda a formatear y crear soportes USB de arranque, como «pendrives», tarjetas de memoria, etcétera.</p>
+		<p>Es especialmente útil en casos donde:			<ul>
+				<li>necesite crear medios de instalación USB a partir de ISOs arrancables (Windows, Linux, UEFI, etc.)</li>
+				<li>necesite trabajar en un equipo que no tenga un sistema operativo instalado</li>
+				<li>necesite actualizar el firmware o BIOS de un ordenador desde DOS</li>
+				<li>quiera ejecutar una utilidad de bajo nivel</li>
+			</ul>
+		</p>
+		<p>A pesar de su pequeño tamaño, Rufus ofrece todo lo que necesita.</p>
+		<p>Ah, y Rufus es <b>rápido</b>. Por ejemplo, es casi dos veces más rápido que <a target="_blank" href="http://unetbootin.sourceforge.net/">UNetbootin</a>, <a target="_blank" href="http://www.pendrivelinux.com/universal-usb-installer-easy-as-1-2-3">Universal USB Installer</a> o la <a target="_blank" href="https://www.microsoft.com/en-us/download/windows-usb-dvd-download-tool">herramienta de descarga a USB de Windows 7</a>, en la creación de un instalador USB de Windows 7 desde una ISO. También es ligeramente más rápido en la creación de USB de arranque de Linux a partir de ISO. <a href="#ref1"><sup>(1)</sup></a><br/>
+		Más abajo hay una lista no exhaustiva de ISO admitidas por Rufus. <a href="#ref2"><sup>(2)</sup></a></p>
+				<a name="download"></a>
+		<h2 style="border: 4px solid #a09a8a;"><span style="font-size: 133%">Descargar</span></h2>
+			<p><b>Actualizado el 2021.04.30:</b></p>
+			<p><ul><li><span style="font-size: 133%"><b><a href="rufus-3.14.exe"Download="rufus-3.14.exe">Rufus 3.14</a></b></span> <span dir="ltr">(1.1 MB)</span></li>
+			<li><a href="https://github.com/pbatard/rufus/releases/download/v3.14/rufus-3.14p.exe">Rufus 3.14 Portable</a> <span dir="ltr">(1.1 MB)</span></li>
+			<li><a href="/downloads/">Otras versiones (GitHub)</a></li>
+			<li><a target="_blank" href="https://www.fosshub.com/Rufus.html">Otras versiones (FossHub)</a></li>
+			</ul></p>
+		<h4>Idiomas admitidos:</h4>
+		<p><table dir="ltr" cellspacing="0" cellpadding="0" border="0"><tr>
+			<td><i>Bahasa Indonesia</i></td><td>,&nbsp;</td>
+			<td><i>Bahasa Malaysia</i></td><td>,&nbsp;</td>
+			<td><i>Български</i></td><td>,&nbsp;</td>
+			<td><i>Čeština</i></td><td>,&nbsp;</td>
+			<td><i>Dansk</i></td><td>,&nbsp;</td>
+			<td><i>Deutsch</i></td><td>,&nbsp;</td>
+			<td><i>Ελληνικά</i></td><td>,&nbsp;</td>
+		</tr></table><table dir="ltr" cellspacing="0" cellpadding="0" border="0"><tr>
+			<td><i>English</i></td><td>,&nbsp;</td>
+			<td><i>Español</i></td><td>,&nbsp;</td>
+			<td><i>Français</i></td><td>,&nbsp;</td>
+			<td><i>Hrvatski</i></td><td>,&nbsp;</td>
+			<td><i>Italiano</i></td><td>,&nbsp;</td>
+			<td><i>Latviešu</i></td><td>,&nbsp;</td>
+			<td><i>Lietuvių</i></td><td>,&nbsp;</td>
+			<td><i>Magyar</i></td><td>,&nbsp;</td>
+			<td><i>Nederlands</i></td><td>,&nbsp;</td>
+			<td><i>Norsk</i></td><td>,&nbsp;</td>
+		</tr></table><table dir="ltr" cellspacing="0" cellpadding="0" border="0"><tr>
+			<td><i>Polski</i></td><td>,&nbsp;</td>
+			<td><i>Português</i></td><td>,&nbsp;</td>
+			<td><i>Português do Brasil</i></td><td>,&nbsp;</td>
+			<td><i>Русский</i></td><td>,&nbsp;</td>
+			<td><i>Română</i></td><td>,&nbsp;</td>
+			<td><i>Slovensky</i></td><td>,&nbsp;</td>
+			<td><i>Slovenščina</i></td><td>,&nbsp;</td>
+			<td><i>Srpski</i></td><td>,&nbsp;</td>
+		</tr></table><table dir="ltr" cellspacing="0" cellpadding="0" border="0"><tr>
+			<td><i>Suomi</i></td><td>,&nbsp;</td>
+			<td><i>Svenska</i></td><td>,&nbsp;</td>
+			<td><i>Tiếng&nbsp;Việt</i></td><td>,&nbsp;</td>
+			<td><i>Türkçe</i></td><td>,&nbsp;</td>
+			<td><i>Українська</i></td><td>,&nbsp;</td>
+			<td>简体中文</td><td>,&nbsp;</td>
+			<td>正體中文</td><td>,&nbsp;</td>
+			<td>日本語</td><td>,&nbsp;</td>
+			<td>한국어</td><td>,&nbsp;</td>
+			<td>ไทย</td><td>,&nbsp;</td>
+		</tr></table><table dir="ltr" cellspacing="0" cellpadding="0" border="0"><tr>
+			<td>עברית</td><td>,&nbsp;</td>
+			<td>العربية</td><td>,&nbsp;</td>
+			<td>پارسی</td><td>.</td>
+		</tr></table></p>
+		<h4>Requisitos del sistema:</h4>
+		<p>Windows 7 y posterior, no importa si es 32 o 64 bits. Una vez descargado, Rufus está listo.</p>
+		<p>Aprovecho esta oportunidad para expresar mi gratitud a los traductores que han hecho posible que tanto Rufus, así como esta página web, estén disponibles en varios idiomas. Si Ud. aprecia el hecho de que pueda utilizar Rufus en su propio idioma, ¡debería agradecerles!</p>
+		<h2>Uso</h2>
+		<p>Descargue el archivo ejecutable y ábralo; no es necesario instalarlo.</p>
+		<p>El ejecutable está firmado digitalmente, y la firma debería indicar:			<ul><li><i>"Akeo Consulting"</i> (v1.3.0 o posterior)</li>
+			<li><i>"Pete Batard - Open Source Developer"</i> (v1.3.0 o anterior)</li></ul></p>
+		<h4>Notas sobre la compatibilidad con DOS:</h4>
+		<p>Si crea un disco de arranque DOS y utiliza un teclado no estadounidense, Rufus intentará seleccionar una disposición de teclado a partir de la configuración regional del sistema. En ese caso, se recomienda <a target="_blank" href="http://www.freedos.org">FreeDOS</a>, que es la opción predeterminada, ya que admite más disposiciones de teclado.</p>
+		<h4>Notas sobre la compatibilidad con ISO:</h4>
+		<p>Todas las versiones de Rufus a partir de v1.1.0 permiten crear soportes USB de arranque a partir de una <a target="_blank" href="http://en.wikipedia.org/wiki/ISO_image">imagen ISO</a> (.iso).</p>
+		<p>Es muy fácil crear una imagen ISO a partir de un disco físico o de un conjunto de archivos, con el uso de una aplicación de grabación de CD, como <a target="_blank" href="http://infrarecorder.org/">InfraRecorder</a> o <a target="_blank" href="http://cdburnerxp.se/">CDBurnerXP</a>, ambas gratuitas.</p>
+		<a name="FAQ"></a>
+		<h2>Preguntas frecuentes</h2>
+		<p>Una lista de las preguntas más frecuentes sobre Rufus está disponible <b><a target="_blank" href="https://github.com/pbatard/rufus/wiki/FAQ">AQUÍ</a></b> (en inglés).<br/></p>
+		<p>Para enviar comentarios, notificar un error o solicitar una mejora, use el <a target="_blank" href="https://github.com/pbatard/rufus/issues">sistema de seguimiento de incidencias</a> (en inglés) de GitHub. O puede <a target="_blank" href="mailto:pete@akeo.ie?subject=Rufus">enviarme un correo electrónico</a> (en inglés).</p>
+		<a name="license"></a>
+		<h2>Licencia</h2>
+		<p><a target="_blank" href="http://www.gnu.org/licenses/gpl.html">Licencia Pública General de GNU (GPL) versión 3</a> o posterior.<br />Es libre de distribuir, modificar o incluso vender el software, en la medida en que la licencia GPLv3 sea respetada.</p>
+		<p>Rufus es producido en una manera 100 % transparente a partir de su <a target="_blank" href="https://github.com/pbatard/rufus">código fuente público</a>, mediante un entorno <a target="_blank" href="http://mingw-w64.org">MinGW32</a>.</p>
+		<a name="changelog"></a>
+		<h2>Registro de cambios</h2>
+		<ul dir="ltr">
+			<li><b>Versión 3.14</b> (2021.04.30)				<ul dir="ltr">
+					<li><span dir="ltr">Improve DD write speed (uncompressed images only)</span></li>
+					<li><span dir="ltr">Improve checksum computation speed</span></li>
+					<li><span dir="ltr">Improve network connectivity detection</span></li>
+					<li><span dir="ltr">Only prompt for additional GRUB/Syslinux downloads when not writing in DD mode</span></li>
+					<li><span dir="ltr">Fix potential "loss" of disk after writing Ubuntu 20.10 in DD mode</span></li>
+					<li><span dir="ltr">Fix GRUB compatibility issue with Ubuntu 21.04</span></li>
+					<li><span dir="ltr">Fix Rufus MBR not being selected by default for Windows ISOs</span></li>
+					<li><span dir="ltr">Fix drag and drop being enabled during drive creation</span></li>
+					<li><span dir="ltr">Add more "exceptions" for forced DD image writing</span></li>
+				</ul>
+			</li>
+						<li><b><a target="_blank" href="https://github.com/pbatard/rufus/blob/master/ChangeLog.txt">Otras versiones</a></b></li>
+		</ul>
+
+		<h2>Código fuente</h2>
+			<p><ul><li><a target="_blank" href="https://github.com/pbatard/rufus/archive/v3.14.zip">Rufus 3.14</a> <span dir="ltr">(3.5 MB)</span></li>
+			<li>También puede clonar el repositorio de <a target="_blank" href="http://git-scm.com">Git</a> usando:			<pre dir="ltr">$ git clone git://github.com/pbatard/rufus</pre></li>
+			<li>Para obtener más información, échele un vistazo al <a target="_blank" href="https://github.com/pbatard/rufus">proyecto en GitHub</a>.</li></ul>
+			Si sabe programar, le animamos a trastear con Rufus y enviar parches.</p>
+		<a name="donate"></a>
+		<h2>Donaciones</h2>
+			<p>Ya que me están haciendo preguntas sobre esto con regularidad, no hay <b>ningún</b> botón de donación en esta página.</p>
+			<p>La razón principal es que siento que el sistema de donaciones no ayuda al desarrollo de software y peor aún, puede provocar sentimientos de culpa a aquellos que no deseen donar.</p>
+			<p>Si realmente insiste, siempre puede hacer una donación a la <a target="_blank" href="http://www.fsf.org/">Free Software Foundation</a>, ya que ellos son la razón principal por la cual software como Rufus es posible.</p>
+			<p>En cualquier caso, tomo esta oportunidad para decir <i><u>gracias</u></i> por su continuo apoyo y entusiasmo por este pequeño programa: ¡lo aprecio mucho!</p>
+			<p>Pero, por favor, siéntase libre de utilizar Rufus sin culpa alguna por no haber contribuido monetariamente hacia su desarrollo.</p>
+		<a name="ref1">&nbsp;</a>
+		<h2>(1) Comparación de velocidades entre Rufus y otras aplicaciones</h2>
+		<p>Las siguientes pruebas se realizaron en un equipo Windows 7 x64 Core 2 duo/4 GB RAM, con un controlador USB 3.0 y una <a target="_blank" href="http://www.adata-group.com/index.php?action=product_feature&cid=1&piid=145&lan=en">unidad flash de 16 GB USB 3.0 ADATA S102</a>.</p>
+		<p><table dir="ltr" cellspacing="0" cellpadding="0" border="0"><tr><td>&bull;&nbsp;</td><td>Windows 7 x64</td><td>:&nbsp;</td><td><i>en_windows_7_ultimate_with_sp1_x64_dvd_618240.iso</i></td></tr></table><br/>
+		<table class="reference" style="width:70%">
+		<tr><td width="80%">Windows 7 USB/DVD Download Tool v1.0.30</td><td>00:08:10</td></tr>
+		<tr><td>Universal USB Installer v1.8.7.5</td><td>00:07:10</td></tr>
+		<tr><td>UNetbootin v1.1.1.1</td><td>00:06:20</td></tr>
+		<tr><td>RMPrepUSB v2.1.638</td><td>00:04:10</td></tr>
+		<tr><td>WiNToBootic v1.2</td><td>00:03:35</td></tr>
+		<tr><td><b>Rufus v1.1.1</b></td><td><b>00:03:25</b></td></tr>
+		</table></p>
+		<p><table dir="ltr" cellspacing="0" cellpadding="0" border="0"><tr><td>&bull;&nbsp;</td><td>Ubuntu 11.10 x86</td><td>:&nbsp;</td><td><i>ubuntu-11.10-desktop-i386.iso</i></td></tr></table><br/>
+		<table class="reference" style="width:70%">
+		<tr><td width="80%">UNetbootin v1.1.1.1</td><td>00:01:45</td></tr>
+		<tr><td>RMPrepUSB v2.1.638</td><td> 00:01:35</td></tr>
+		<tr><td>Universal USB Installer v1.8.7.5</td><td>00:01:20</td></tr>
+		<tr><td><b>Rufus v1.1.1</b></td><td><b>00:01:15</b></td></tr>
+		</table></p>
+		<p><table dir="ltr" cellspacing="0" cellpadding="0" border="0"><tr><td>&bull;&nbsp;</td><td>Slackware 13.37 x86</td><td>:&nbsp;</td><td><i>slackware-13.37-install-dvd.iso</i></td></tr></table><br/>
+		<table class="reference" style="width:70%">
+		<tr><td width="80%">UNetbootin v1.1.1.1</td><td>01:00:00+</td></tr>
+		<tr><td>Universal USB Installer v1.8.7.5</td><td>00:24:35</td></tr>
+		<tr><td>RMPrepUSB v2.1.638</td><td>00:22:45</td></tr>
+		<tr><td><b>Rufus v1.1.1</b></td><td><b>00:20:15</b></td></tr>
+		</table></p>
+		<a name="ref2">&nbsp;</a>
+		<h2>(2) Lista no exhaustiva de ISO que se sabe que funcionan con Rufus</h2>
+		<table dir="ltr" cellspacing="0" cellpadding="0" border="0"><tr>
+			<td><a target="_blank" href="http://www.archlinux.org/">Arch&nbsp;Linux</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://archbang.org/">Archbang</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://www.nu2.nu/pebuilder/">BartPE/pebuilder</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://centos.org">CentOS</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://www.damnsmalllinux.org/">Damn&nbsp;Small&nbsp;Linux</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="https://www.debian.org/">Debian</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://fedoraproject.org/">Fedora</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://www.freedos.org/">FreeDOS</a></td><td>,&nbsp;</td>
+		</tr></table><table dir="ltr" cellspacing="0" cellpadding="0" border="0"><tr>
+			<td><a target="_blank" href="http://www.freenas.org/">FreeNAS</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://www.gentoo.org/">Gentoo</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://gparted.org/">GParted</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://www.gnewsense.org/">gNewSense</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://www.hirensbootcd.org/">Hiren's&nbsp;Boot&nbsp;CD</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://reboot.pro/forum/52/">LiveXP</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://knoppix.net/">Knoppix</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://kolibrios.org">KolibriOS</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://www.kubuntu.org/">Kubuntu</a></td><td>,&nbsp;</td>
+		</tr></table><table dir="ltr" cellspacing="0" cellpadding="0" border="0"><tr>
+			<td><a target="_blank" href="http://linuxmint.com/">Linux&nbsp;Mint</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://pogostick.net/~pnh/ntpasswd/">NT&nbsp;Password&nbsp;Registry&nbsp;Editor</a></td><td>,&nbsp;</td>
+			<!-- <td><a target="_blank" href="http://www.opensuse.org/">OpenSUSE</a></td><td>,&nbsp;</td> -->
+			<td><a target="_blank" href="http://partedmagic.com/">Parted&nbsp;Magic</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://www.partitionwizard.com/partition-wizard-bootable-cd.html">Partition&nbsp;Wizard</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://www.raspbian.org/">Raspbian</a></td><td>,&nbsp;</td>
+		</tr></table><table dir="ltr" cellspacing="0" cellpadding="0" border="0"><tr>
+			<td><a target="_blank" href="http://reactos.org/">ReactOS</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://www.redhat.com/">Red&nbsp;Hat</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://www.rodsbooks.com/refind/">rEFInd</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://www.slackware.com/">Slackware</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://www.supergrubdisk.org/category/download/supergrub2diskdownload/super-grub2-disk-stable/">Super&nbsp;Grub2&nbsp;Disk</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="https://tails.boum.org/">Tails</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://trinityhome.org/">Trinity&nbsp;Rescue&nbsp;Kit</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="http://www.ubuntu.com/">Ubuntu</a></td><td>,&nbsp;</td>
+		</tr></table><table dir="ltr" cellspacing="0" cellpadding="0" border="0"><tr>
+			<td><a target="_blank" href="http://www.ultimatebootcd.com/">Ultimate&nbsp;Boot&nbsp;CD</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="https://msdn.microsoft.com/en-us/subscriptions/downloads/default.aspx#searchTerm=&ProductFamilyId=140&Languages=en&FileExtensions=.iso&PageSize=10&PageIndex=0&FileId=0">Windows&nbsp;XP&nbsp;<span dir="ltr">(SP2+)</span></a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="https://msdn.microsoft.com/en-us/subscriptions/downloads/default.aspx#searchTerm=&ProductFamilyId=146&Languages=en&FileExtensions=.iso&PageSize=10&PageIndex=0&FileId=0">Windows&nbsp;Vista</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="https://msdn.microsoft.com/en-us/subscriptions/downloads/default.aspx#searchTerm=&ProductFamilyId=351&Languages=en&FileExtensions=.iso&PageSize=10&PageIndex=0&FileId=0">Windows&nbsp;Server&nbsp;2008</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="https://msdn.microsoft.com/en-us/subscriptions/downloads/default.aspx#searchTerm=&ProductFamilyId=350&Languages=en&FileExtensions=.iso&PageSize=10&PageIndex=0&FileId=0">Windows&nbsp;7</a></td><td>,&nbsp;</td>
+		</tr></table><table dir="ltr" cellspacing="0" cellpadding="0" border="0"><tr>
+			<td><a target="_blank" href="https://msdn.microsoft.com/en-us/subscriptions/downloads/default.aspx#searchTerm=&ProductFamilyId=481&Languages=en&FileExtensions=.iso&PageSize=10&PageIndex=0&FileId=0">Windows&nbsp;8</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="https://msdn.microsoft.com/en-us/subscriptions/downloads/default.aspx#searchTerm=&ProductFamilyId=524&Languages=en&FileExtensions=.iso&PageSize=10&PageIndex=0&FileId=0">Windows&nbsp;8.1</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="https://msdn.microsoft.com/en-us/subscriptions/downloads/default.aspx#searchTerm=&ProductFamilyId=483&Languages=en&FileExtensions=.iso&PageSize=10&PageIndex=0&FileId=0">Windows&nbsp;Server&nbsp;2012</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="https://www.microsoft.com/en-us/software-download/windows10ISO/">Windows&nbsp;10</a></td><td>,&nbsp;</td>
+			<td><a target="_blank" href="https://msdn.microsoft.com/en-us/subscriptions/downloads/default.aspx#searchTerm=&ProductFamilyId=665&Languages=en&FileExtensions=.iso&PageSize=10&PageIndex=0&FileId=0">Windows&nbsp;Server&nbsp;2016</a></td><td>,&nbsp;</td>
+
+			<td>&hellip;</td>
+		</tr></table></p>
+		<div class="footer"><table align="center" dir="ltr" cellspacing="0" cellpadding="0" border="0"><tr>
+			<td>Copyright&nbsp;</td><td>©&nbsp;</td><td>2011-2021&nbsp;</td><td><a target="_blank" href="https://pete.akeo.ie">Pete&nbsp;Batard</a></td></tr></table>
+			Traducción al español por <a href="mailto:kelopez.cl@gmail.com?subject=Traducción al español del sitio web de Rufus">Kevin López</a><br/>			Icono de USB por PC Unleashed<br/>
+			Alojamiento web por <a target="_blank" href="https://pages.github.com/">GitHub</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
